@@ -1,0 +1,42 @@
+version: '3'
+
+networks:
+    mbioteh_net:
+
+services:
+    mbioteh_nginx:
+        build:
+            context: './nginx'
+        container_name: ${COMPOSE_PROJECT_NAME}_nginx
+        ports:
+            - 80:8080
+        volumes:
+            - ${PHP_WEBROOT}:/var/www/html
+        depends_on:
+            - mbioteh_php
+        networks:
+            - mbioteh_net
+        env_file: ./.env
+    mbioteh_php:
+        container_name: ${COMPOSE_PROJECT_NAME}_php
+        build: ./php
+        ports:
+            - 8081:9000
+        volumes:
+            - ${PHP_WEBROOT}:/var/www/html
+        depends_on:
+            - mbioteh_db
+        networks:
+            - mbioteh_net
+        env_file: ./.env
+    mbioteh_db:
+        image: mariadb:10.5
+        container_name: ${COMPOSE_PROJECT_NAME}_db
+        ports:
+            - '3306:3306'
+        networks:
+            - mbioteh_net
+        volumes:
+            - ./db/data:/var/lib/mysql
+            - ./db/dumps:/dumps
+        env_file: ./.env
