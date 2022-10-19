@@ -79,7 +79,7 @@ $ docker exec -it mbioteh_test_php bash
  # php bin/console number:retrieve [id]
  ```
 
-## Резальтат:
+## Вывод:
 
 Цель основной задачи выполнена. Две дополнительные задачи из пяти выполнены.
 
