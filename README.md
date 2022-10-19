@@ -17,20 +17,73 @@
 ---
 ## Время разработки
  - Окружение - 2 часа
- - Реализация - 6 часов
+ - Реализация - 2 дня
+ - Отладка - 4 часа
 
 ---
+## Зависимости:
+ - docker version 20.10.19, build d85ef84
+ - docker-compose version 1.29.2, build unknown
 
-Запуск проекта:
+---
+## Копирование проекта:
+```bash
+$ git clone git@github.com:stepan-workspace/mbioteh_test.git
+$ cd ./mbioteh_test/
+```
+
+## Настройка среды и запуск:
 ```bash
 $ cd ./docker/
+$ cp .env.dist .env
 $ make build
 $ make up
 ```
-перейти в браузер по 127.0.0.1
+
+## Настройка проекта:
+```bash
+$ docker exec -it mbioteh_test_php bash
+# cd app/
+# cp .env.dist .env
+# composer install
+# php bin/console doctrine:schema:update --force
+
+```
+
+После настройки перейти в браузер по 127.0.0.1 на главную страницу проекта (стартовая Symfony)
 
 ---
+## Работа с проектом:
 
-Зависимости:
- - PHP 8.1
- - Nginx 1.23
+ - http://127.0.0.1/api - список доступных API (API Platform)
+ - http://127.0.0.1/api/generate - генерация случайного числа (запись в БД)
+ - http://127.0.0.1/api/retrieve/[id] - плучение элемента по `Id` (`Id` необходимо указать)
+
+**Консольные команды:**
+```bash
+$ docker exec -it mbioteh_test_php bash
+# cd app/
+```
+ - список доступных команд:
+```bash
+# php bin/console
+```
+ - генерация случайного числа (запись в БД):
+```bash
+# php bin/console number:generate
+```
+*результат будет выведен на экран*
+
+ - плучение элемента по `Id` (`Id` необходимо указать):
+ ```bash
+ # php bin/console number:retrieve [id]
+ ```
+
+## Резальтат:
+
+Цель основной задачи выполнена. Две дополнительные задачи из пяти выполнены.
+
+Стек:
+ - **Docker** 20.10, **docker-compose** 1.29,
+ - **PHP 8**.1, **Nginx** 1.23, **MariaDB** 10.5,
+ - **Symfony 6.1**
